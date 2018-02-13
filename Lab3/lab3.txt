@@ -1,0 +1,79 @@
+Get the file using wget
+Command: wget ftp://ftp.gnu.org/gnu/coreutils/coreutils-7.6.tar.gz
+
+Unzip:
+Command: tar -xvf coreutils-7.6.tar.gz
+
+Install the file. Read INSALL:
+Command: cd coreutils-7.6/
+		 ./configure --prefix=/u/ee/ugrad/jiashu/coreutils
+
+Compile the program:
+Command: make install
+
+Set the LC_ALL environment variable:
+export LC_ALL='en_US.UTF-8'
+
+Go to directory:
+cd ../coreutils/bin
+
+./ls -l /bin/bash
+-rwxr-xr-x 1 root root 960632 2017-08-03 06:36 /bin/bash
+Apparently, the output of date format is not what we have expected.
+
+A file called patch.diff was made using emacs. 
+Before running the patch command, the path in line 2 and 3 needs to be changed
+to:
+./coreutils7.6/src/ls.c
+
+To patch the file use the following command:
+Command: patch -p0 < patch. diff
+
+However, I have encountered an error output as follow:
+
+patching file ./src/ls.c
+Hunk #1 FAILED at 2014 (different line endings).
+Hunk #2 FAILED at 2030 (different line endings).
+2 out of 2 hunks FAILED -- saving rejects to file ./src/ls.c.rej
+
+After careful scrutinizing and learning from piazza for reference, I realized
+that using emacs to create a file will result in corruption of the patch file. 
+Then I chose to use vim to create the patch file.
+The patch ran successfully after the second trial：
+
+patching file ./coreutils-7.6/src/ls.c
+Hunk #1 succeeded at 2013 (offset -1 lines).
+patch unexpectedly ends in middle of line
+Hunk #2 succeeded at 2028 with fuzz 1 (offset -1 lines).
+
+Next is to recompile the program using the make command
+Command: make install
+
+For a recently modified file:
+
+Before the patch:
+ls -l ./coreutils-7.6.tar.gz 
+-rw-r--r-- 1 jiashu eeugrad 10014650 2017-10-17 09:12 ./coreutils-7.6.tar.gz
+
+After the patch:
+ls -l ./coreutils-7.6.tar.gz 
+-rw-r--r-- 1 jiashu eeugrad 10014650 Oct 17 09:12 ./coreutils-7.6.tar.gz
+
+For an at least one year old file: 
+
+Use touch comamnd to modify the time coreutils-7.6.tar.gz file:
+
+touch -t 1501010000 coreutils-7.6.tar.gz
+
+So now the date of the file is changed to Jan 1 2015
+
+Before the patch:
+Command: ls -l ./coreutils-7.6.tar.gz
+-rw-r--r-- 1 jiashu eeugrad 10014650 01012015 ./coreutils-7.6.tar.gz
+
+After the patch:
+Command: ls -l ./coreutils-7.6.tar.gz
+-rw-r--r-- 1 jiashu eeugrad 10014650 Jan  1  2015 ./coreutils-7.6.tar.gz
+
+From the results, we have seen that the output for format for dates has been
+corrected.

@@ -1,0 +1,21 @@
+gitk-description.txt
+Michael (Jiashu) Zhou
+UID: 804 663 317
+
+Top left window: This window shows a hierarchical structure of commits. It
+displays a visual representation of the history of commits in the form of a
+tree, showing different branches, relationships, the head pointer, and commit
+messages.
+
+Top middle window: This window displays corresponding authors and their emails
+associated with each of the commits displayed in the commit history tree.
+
+Top right window: This window shows the dates and times of all the commits
+displayed by the same history tree.
+
+Bottom left window: This window shows the contents of the ChangeLog of the
+currently selected commit in a diff format. The ChangeLog contains information
+about the commit, such as committer, author, parent, child, branches, etc.
+
+Bottom right window: This window lists the files directly changed and modified
+by the selected commit.

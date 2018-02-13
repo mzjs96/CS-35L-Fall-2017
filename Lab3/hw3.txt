@@ -1,0 +1,45 @@
+Q1:
+Brady's patch removed the line "case_long_iso_time_style" because it is a
+label for the goto command, and there is a duplicate of this label in the
+patch which is to be deleted. Therefore, this line can be removed without
+causing problem. It is not necessary to remove this line because the code will
+still run the same and nothing will be affected.
+
+Q2:
+Since the modification will force the date to be displayed in a specific 
+format, for locales that do not have a translation, foreign language speakers
+could not understand it. On the other hand, I noticed that the modification 
+replaces the time by year for the files that are already one year old.
+
+Q3:
+When I invoked randline.py on an empty file, the output is shown as following:
+
+Traceback (most recent call last):
+  File "randline.py", line 70, in <module>
+    main()
+  File "randline.py", line 64, in main
+    sys.stdout.write(generator.chooseline())
+  File "randline.py", line 34, in chooseline
+    return random.choice(self.lines)
+  File "/usr/lib64/python2.7/random.py", line 274, in choice
+    return seq[int(self.random() * len(seq))]  # raises IndexError if seq is 
+    empty
+IndexError: list index out of range
+
+The index error occurs when chooseline() is called.
+There are 0 line to be accessed by the class randline. The error is called 
+because the seq is empty.
+
+Q4:
+Run randline.py under python3 gives the following:
+
+  File "randline.py", line 65
+    except IOError as (errno, strerror):
+                      ^
+SyntaxError: invalid syntax
+
+The syntax error occurs because in python 3 the IOError is merged into OSError.
+To correct it, change into the following:
+
+except OSError as err:
+       parser.error("OS error: {0}".format(err))

@@ -1,0 +1,83 @@
+Michael (Jiashu) Zhou
+Lab 7
+804 663 317
+Partner: Xilai Zhang
+
+First we decided to let Xilai's Beaglebone act as the server, and mine act as 
+the clinet. 
+After following the setup process on piazza, we first follow TA's instruction 
+to generate the public and private keys:
+
+	ssh-keygen
+
+Next we are prompted to create a password for the the server machine. It is 
+intentially left blank by hitting ENTER. Then a new account is created for 
+clinet on the server, and create its new directory on the server:
+
+	sudo useradd -d /home/newuser -m jiashu
+
+Next create a password the new user jiashu
+
+	sudo passwd jiashu
+
+The password is set as "qwerty" for simplicity.
+
+Next is to create a new .ssh directory for the new user created:
+
+	cd /home/newuser
+	sudo mkdir .ssh
+
+Next is to authorize ownership and permission of the .ssh directory to the new 
+	user jiashu
+
+	sudo chown -R jiashu .ssh
+	sudo chmod 700 .ssh
+
+The server part is done. Next is to setup on the client side:
+
+First we need to look up the ip address of the machine:
+
+	ifconfig
+
+The IP address of the machine is given as: 15.85.79.33
+
+For the client machine, first is to setup the public and private keys for ssh. 
+Then add the public key to the server's ssh folder
+
+	ssh-keygen
+
+Then make a copy of the public key to the server's ssh folder.
+
+	ssh-copy-id -i jiashu@15.85.79.33
+
+Next is to add the private key to authentication agent.
+	ssh-add
+
+At this point we have encountered a problem. The output was "Could not open a 
+connection to authentication agent" 
+Later we figured out that for my machine(client) I forgot to implement "agent 
+on" during the setup process.
+
+Now after setting passphrase the for the new account by hitting "qwerty", log 
+in the server using ssh:
+
+	ssh jiashu@15.85.79.33
+
+Now i have the authorization to access the server and my drectory, if I run
+
+	xterm
+
+the xterm shell will pop up.
+
+To see the connection run
+
+	who 
+
+command on the server to see currently connected users.
+The display shows that the IP address of 15.85.79.33, which agrees with the ip 
+address in ifconfig. Now we have confirmed that my client has successfully log 
+into my partner (Xilai's) server.
+
+Then do the reverse for similar steps. Let my machine be the server and 
+Xilai's machine as the client and do the same process and turns out to be the 
+correct behavior.

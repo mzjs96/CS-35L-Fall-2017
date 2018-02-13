@@ -1,0 +1,39 @@
+hw.txt 
+Michael (Jiashu) Zhou 
+HW7 
+804 663 317 
+
+1. The network is still secure. Anyone who
+intercepts the data would only obtain the encrypted bytes across the network.
+Because the other team do not have access to the private keys, they cannot
+decrypt the intercepted encrypted bytes. Therefore, since the data cannot be
+decrypted, the network is still secure.
+
+	1） If assumed the other teams had also tapped keyboards and had observed all
+	of our keystrokes, they still cannot obtain the private key, because that is
+	generated randomly and independent of the keystrokes. However, the other
+	team can still see what we have typed for the user name and password.
+	Therefore, they can obtain the private key to decrypt the data, meaning that
+	if an attacker has access to the computer, the private key may potentially
+	be accessed with a passphrase.
+
+	2) Yes, if the other teams had access to the USB with the system files to be
+	booted from, they could have direct access to the .ssh files, and obtain the
+	private key, thus enabling them to decipher any intercepted bytes.
+
+2. The gpg --verify command can only verify wheterh the target file and the
+detached signature match, but it cannot prove that the file is obtained from the
+original source. This only proves that the detached signature and received
+message are of the same source, but does not confirm the legitimacy of the
+sender or that the file was truly made by the intended source. For example, if
+one pretends to be another person to send message digest algorithm to the third
+person, the third person will not be able to know wheather it is the pretended
+person or the original expected source who sent the message.
+
+To resolve the problem, we need to prove the true origin of the document. To
+truly confirm and verify the original author, the first public key must be
+confirmed to be authentic. This can be verified by a third party rganization
+such as certificate authority (CA) to verify the identity of the sender based on
+their issued digital certificate. The public key must be confirmed to be
+authentic, and the ownership of the public key must belong to the named subject
+of the certificates.

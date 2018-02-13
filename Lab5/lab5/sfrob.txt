@@ -1,0 +1,81 @@
+CS35L - HW5
+sfrob.txt
+Michael Zhou
+804663317
+
+Comparison:
+
+sfrobu:
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrobu < input_2 > outt
+comparison: 371373
+
+real    0m7.325s
+user    0m0.403s
+sys     0m6.825s
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrobu < input_20 > outt
+comparison: 1168298
+
+real    0m21.233s
+user    0m1.266s
+sys     0m19.613s
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrobu < input_1 > outt
+comparison: 41887
+
+real    0m1.104s
+user    0m0.072s
+sys     0m1.006s
+
+sfrob:
+
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrob < input_1 > outt
+
+real    0m0.005s
+user    0m0.000s
+sys     0m0.001s
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrob < input_2 > outt
+
+real    0m0.003s
+user    0m0.001s
+sys     0m0.000s
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrob < input_20 > outt
+
+real    0m0.009s
+user    0m0.000s
+sys     0m0.004s
+
+We can see that sfrob, which uses buffered I/O (getchar/putchar) runs much
+faster than sfrobu.  Sfrobu uses unbuffered I/O with system calls read/write.
+This means that for every byte there are at least two system calls to read and
+write it, which causes the sys time of the program to be much greater than that
+of sfrob.
+
+
+To estimate the number of comparison as a function of number of input lines:
+	8686 lines of file takes roughly 1100000 comparisons.
+	4343 lines of file takes roughly 512500 comparisons.
+If we copy the data into excel and generate a linear regression, we get:
+y = 0.596x - 29166
+
+Now, we test the rest:
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrobs < input_20 > outt
+
+real    0m0.503s
+user    0m0.205s
+sys     0m0.076s
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrobs -f < input_20 > outt
+
+real    0m0.494s
+user    0m0.188s
+sys     0m0.067s
+[jiashu@lnxsrv01 ~/lab5]$ time ./sfrobu -f < input_20 > outt
+comparison: 1168247
+
+real    0m21.033s
+user    0m1.287s
+sys     0m19.412s
+
+From the above performance, we notice that the shell version performance is 
+also better than the unbuffered version. the shell script takes much less time 
+than sfrobu, but still more than sfrob. Since shell doesn't use unbuffered I/
+O, the longer runtime could be due to linux's use of mergesort rather than 
+quicksort.

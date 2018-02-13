@@ -1,0 +1,115 @@
+hw.txt
+Michael(Jiashu) Zhou
+UID: 804 663 317
+HW 9 Log
+
+1. 
+Maintain a file hw9.txt that logs the action in solving the homework.
+
+2.
+Checkout the version 3.0 of Diffutils from my repository into a new branch 
+named "quote"
+	git checkout -b 'quote' 'v3.0'
+	Switched to a new branch 'quote'
+
+3.
+Install changes into the new branch
+	patch -p1 < ../quote-3.0-patch.txt 
+4.
+Learn how to use changelog command:
+
+5.
+Open emacs
+	emacs
+Open ChangeLog
+	C-x 4 a
+
+Type in the following informantion:
+    * src/cmp.c (try_help, specify_ignore_initial, usage, main):
+	* src/diff.c (main, try_help, option_help_msgid, specify_value)
+	(compare_files):
+	* src/diff3.c (main, try_help, option_help_msgid, usage)
+	(read_diff):
+	* src/dir.c (compare_names):
+	* src/sdiff.c (try_help, usage, check_child_status, main):
+	* src/util.c (finish_output):
+	Quote 'like this' in output.
+
+6.
+Commit changes with ChangeLog file in commit:
+	git commit -aF ChangeLog
+
+7.
+Create the formatted patch:
+	git format-patch -1 --stdout > formatted-patch.txt
+I opened it up using eamcs and turns out to be correct with 360+ lines.
+
+8.Verify Partner's Patch
+Partner's name: Yunong Ye (Same Section)
+
+Get the formatted patch file from Yunong, and rename it into:
+	ye-formatted-patch.txt
+
+First create a new Diffutils 3.0 branch called: partner accoring to spec
+	git checkout -b 'partner' 'v3.0'
+
+Then run comand:
+	git am ye-formatted patch.txt
+	Applying: 2017-12-02 Yunong Ye <classrzw@lnxsrv07.seas.ucla.edu>
+
+Then run configure and make file:
+	./boostrap
+	patch -p0 < gets.diff
+	./configure
+	make
+
+Then test the output with command:
+	$ ./src/diff . -
+	$./src/diff --help
+
+The result yields to be correct with no ` appearing through the output.
+
+9. Verifying Changelog
+First make sure that changelog worsks
+	make distdir
+
+A ChangeLog file is created
+
+Check the ChangeLog in the directory
+
+2017-12-02  Jiashu Zhou  <jiashu@lnxsrv02.seas.ucla.edu>
+
+        * src/cmp.c (try_help, specify_ignore_initial, usage, main):
+        * src/diff.c (main, try_help, option_help_msgid, specify_value)
+        (compare_files):
+        * src/diff3.c (main, try_help, option_help_msgid, usage)
+        (read_diff):
+        * src/dir.c (compare_names):
+        * src/sdiff.c (try_help, usage, check_child_status, main):
+        * src/util.c (finish_output):
+
+Therefore it is correct.
+
+10.
+	git clone git://git.savannah.gnu.org/emacs.git gitrepo
+
+into a new directory called "gitrepo"
+Then use gitk to check 
+
+	cd gitrepo
+	gitk
+There was a problem at first that gitk does not work
+-bash: gitk: command not found
+
+Later on from TA on piazza I found out the solution. Run command:
+	export PATH=/usr/local/cs/bin:$PATH
+Then
+	gitk
+It now works.
+
+The newest merge that is not newer than 2015-01-25 turns out to be:
+	Merge branch 'master' into xwidget 2015-01-25 12:19:27
+
+As appeared in the top left window if date of commits is traced through.
+
+Take a screenshot gitk-screenshot.png of the view of the mergepoint.
